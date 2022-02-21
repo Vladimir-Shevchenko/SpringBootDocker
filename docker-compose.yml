@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+
+  springbootapp:
+    depends_on:
+      - mysqldb
+    build: .
+    ports:
+      - "8222:8002"
+    environment:
+      MYSQL_HOST: mysqldb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+
+
+  mysqldb:
+    image: mysql
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"

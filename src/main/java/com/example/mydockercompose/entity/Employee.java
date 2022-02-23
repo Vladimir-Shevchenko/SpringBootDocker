@@ -12,7 +12,9 @@ import java.util.UUID;
 public class Employee {
 
     @Id
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+   // private UUID id = UUID.randomUUID();
     @Column(name = "name")
     private String name;
     @Column(name = "surname")

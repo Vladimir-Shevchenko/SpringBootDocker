@@ -3,12 +3,15 @@ package com.example.mydockercompose.controller;
 import com.example.mydockercompose.entity.Employee;
 import com.example.mydockercompose.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Random;
 
+
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/employees")
@@ -34,5 +37,39 @@ public class EmployeeController {
 
         return employee;
     }
-    
+
+
+    @PostMapping("/update")
+    public Employee updateEmployee(@RequestParam("name") String name, @RequestParam String newName) {
+        Employee employee = employeeService.findByName(name);
+        employee.setName(newName);
+
+        employeeService.createEmployee(employee);
+
+        return employee;
+    }
+
+
+    @GetMapping("/getEmp/{name}")
+    public Employee getEmployeeById(@PathVariable("name") String name) {
+        return employeeService.findByName(name);
+
+    }
+
+
+    @GetMapping("/del/{name}")
+    public String deleteEmployee(@PathVariable("name") String name) {
+        log.info("START controller DEL");
+        employeeService.deleteEmployee(name);
+        log.info("END CONTROLLER DEL");
+        return name;
+    }
+
+
+    @GetMapping("/mw/{name}")
+    public String meow(@PathVariable("name") String name) {
+
+
+        return name;
+    }
 }
